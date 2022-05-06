@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["JiraPoker/JiraPoker.csproj", "JiraPoker/"]
+COPY ["JiraPoker.Core/JiraPoker.Core.csproj", "JiraPoker.Core/"]
 RUN dotnet restore "JiraPoker/JiraPoker.csproj"
 COPY . .
 WORKDIR "/src/JiraPoker"

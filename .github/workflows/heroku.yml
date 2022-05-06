@@ -18,7 +18,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
+                
+      - name: Setup dotnet
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '6.0'
+        
+      - name: Install dependecies
+      run: dotnet restore
+      
+      - name: Build
+      run: dotnet build --configuration Release --no-restore
+      
+      - name: Test
+      run: dotnet test --no-restore --verbosity normal 
+    
       - name: Deploy the image
         run: |
           docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
