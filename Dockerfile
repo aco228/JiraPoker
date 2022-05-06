@@ -17,7 +17,7 @@ RUN dotnet publish "JiraPoker.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-#COPY ./BlazorApp/wwwroot ./wwwroot
+#COPY ./JiraPoker/wwwroot ./wwwroot
 #ENTRYPOINT ["dotnet", "JiraPoker.dll"]
 
-CMD ASPNETCORE_URLS="http://*:$PORT" dotnet BlazorApp.dll
+CMD ASPNETCORE_URLS="http://*:$PORT" dotnet JiraPoker.dll
