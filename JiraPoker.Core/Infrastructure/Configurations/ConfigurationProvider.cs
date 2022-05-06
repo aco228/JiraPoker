@@ -18,7 +18,7 @@ public class ConfigurationProvider : IConfigurationProvider
         _environmentProvider = environmentProvider;
     }
     
-    public T? GetValue<T>(string key)
+    public T GetValue<T>(string key)
     {
         var (configurationExists, configurationValue) = _applicationSettings.GetValue<T?>(key);
         if (configurationExists)
@@ -38,6 +38,16 @@ public class ConfigurationProvider : IConfigurationProvider
         {
             return default(T);
         }
+    }
+
+    public T GetSectionValue<T>(string key)
+    {
+        if (!_applicationSettings.Configuration.GetSection(key).Exists())
+        {
+            throw new ArgumentException("Section does not exists");
+        }
+
+        return _applicationSettings.Configuration.GetSection(key).Get<T>();
     }
 
     public string GetValueOrDefault(string key)

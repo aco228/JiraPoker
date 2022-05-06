@@ -1,15 +1,24 @@
+using JiraPoker.Core.Application;
+using JiraPoker.Core.Infrastructure.Authentification;
 using JiraPoker.Core.Infrastructure.Configurations;
-using JiraPoker.Data;
+using JiraPoker.Core.Infrastructure.Jira;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
 
     // Add services to the container.
+    
+    
+    
+    builder.Services.AddHttpContextAccessor();
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
     builder.Services.RegisterConfigurationsServices();
-    builder.Services.AddSingleton<WeatherForecastService>();
+    builder.Services.AddAuthenticationServices();
+    builder.Services.AddJiraServices();
+    builder.Services.RegisterApplicationServices();
 
     var app = builder.Build();
 
@@ -22,6 +31,9 @@ try
     app.UseHttpsRedirection();
     app.UseStaticFiles();
     app.UseRouting();
+    
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     // app.MapBlazorHub();
     // app.MapFallbackToPage("/_Host");

@@ -1,4 +1,6 @@
 @page "/"
+@using JiraPoker.Core.Domain.Authentification
+@using JiraPoker.Core.Domain.Authentification.Models
 
 <PageTitle>Index</PageTitle>
 
@@ -6,4 +8,29 @@
 
 Welcome to your new app.
 
+@if (Login != null)
+{
+    <strong>Welcome @Login.Name</strong>
+    <br/>
+    <img src="@Login.PictureUrl"/>
+}
+
 <SurveyPrompt Title="How is Blazor working for you?"/>
+
+@code
+{
+    [Inject] public IAuthStateProvider AuthStateProvider { get; set; }
+
+    private ApplicationUserLoginModel Login = null;
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Login = AuthStateProvider.GetUser();
+            StateHasChanged();
+        }
+        base.OnAfterRender(firstRender);
+    }
+
+}

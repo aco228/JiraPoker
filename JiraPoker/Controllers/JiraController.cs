@@ -1,36 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using IConfigurationProvider = JiraPoker.Core.Domain.Configurations.IConfigurationProvider;
+﻿using JiraPoker.Core.Application.LoginUser;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JiraPoker.Controllers;
 
 public class JiraController : Controller
 {
-    private IConfigurationProvider _configurationProvider;
+    private static readonly string QUERY_CODE = "code";
+    private readonly ILoginUserService _loginUserService;
 
-    public JiraController(IConfigurationProvider configurationProvider)
+    public JiraController(ILoginUserService loginUserService)
     {
-        _configurationProvider = configurationProvider;
-    }
-
-    public IActionResult Test()
-    {
-        return Content(_configurationProvider.GetValueOrDefault("JiraAuthenticationUrl"));
+        _loginUserService = loginUserService;
     }
     
     public async Task<IActionResult> Callback()
     {
-        var response = Request.QueryString
-                       + Environment.NewLine
-                       + Environment.NewLine
-                       + await ReadBody();
-                       
-        return Content(response);
-    }
-    
-    protected async Task<string> ReadBody()
-    {
-        var bodyStream = new StreamReader(Request.Body);
-        var bodyText = await bodyStream.ReadToEndAsync();
-        return bodyText;
+        try
+        {
+            if (await _loginUserService.Login(Request.Query[QUERY_CODE]))
+                return Redirect("/");
+            
+            Response.StatusCode = 400;
+            return Content($"Could not login");
+        }
+        catch (Exception ex)
+        {
+            Response.StatusCode = 400;
+            return Content($"Exception {ex}");
+        }
     }
 }

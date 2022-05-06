@@ -1,4 +1,7 @@
-﻿@using System.Net.Http
+﻿@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+@using System.Net.Http
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -8,3 +11,4 @@
 @using Microsoft.JSInterop
 @using JiraPoker
 @using JiraPoker.Shared
+@using JiraPoker.Components
