@@ -1,27 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using IConfigurationProvider = JiraPoker.Core.Domain.Configurations.IConfigurationProvider;
 
 namespace JiraPoker.Controllers;
 
 public class JiraController : Controller
 {
-    private IConfiguration _configuration;
+    private IConfigurationProvider _configurationProvider;
 
-    public JiraController(IConfiguration configuration)
+    public JiraController(IConfigurationProvider configurationProvider)
     {
-        _configuration = configuration;
+        _configurationProvider = configurationProvider;
     }
 
     public IActionResult Test()
     {
-        return Content(_configuration.GetSection("Jira").GetSection("Authentication").GetValue<string>("Url"));
-    }
-
-    public IActionResult Test2()
-    {
-        var result = Environment.GetEnvironmentVariable("test");
-        if (string.IsNullOrEmpty(result))
-            return Content("Null");
-        return Content(result);
+        return Content(_configurationProvider.GetValueOrDefault("JiraAuthenticationUrl"));
     }
     
     public async Task<IActionResult> Callback()

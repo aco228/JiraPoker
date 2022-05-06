@@ -1,3 +1,4 @@
+using JiraPoker.Core.Infrastructure.Configurations;
 using JiraPoker.Data;
 
 try
@@ -7,6 +8,7 @@ try
     // Add services to the container.
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
+    builder.Services.RegisterConfigurationsServices();
     builder.Services.AddSingleton<WeatherForecastService>();
 
     var app = builder.Build();
