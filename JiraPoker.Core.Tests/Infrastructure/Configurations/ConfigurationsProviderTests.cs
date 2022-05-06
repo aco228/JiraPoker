@@ -1,8 +1,8 @@
 ﻿using System;
 using JiraPoker.Core.Domain.Configurations;
+using JiraPoker.Core.Infrastructure.Configurations;
 using Moq;
 using Xunit;
-using ConfigurationProvider = JiraPoker.Core.Infrastructure.Configurations.ConfigurationProvider;
 
 namespace JiraPoker.Core.Tests.Infrastructure.Configurations;
 
