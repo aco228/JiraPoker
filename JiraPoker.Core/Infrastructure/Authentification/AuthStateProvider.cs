@@ -1,7 +1,5 @@
-﻿using System.Security.Claims;
-using JiraPoker.Core.Domain.Authentification;
+﻿using JiraPoker.Core.Domain.Authentification;
 using JiraPoker.Core.Domain.Authentification.Models;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Http;
 
 namespace JiraPoker.Core.Infrastructure.Authentification;
