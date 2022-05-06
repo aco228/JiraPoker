@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using JiraPoker.Data;
 
 try
@@ -27,8 +25,20 @@ try
 
     app.UseRouting();
 
-    app.MapBlazorHub();
-    app.MapFallbackToPage("/_Host");
+    // app.MapBlazorHub();
+    // app.MapFallbackToPage("/_Host");
+    
+    app.UseEndpoints(endpoints =>
+    {
+        //endpoints.MapControllerRoute("default", "{controller=Account}/{action=login}/{id?}");
+                
+        endpoints.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+        endpoints.MapControllers();
+        endpoints.MapBlazorHub();
+        endpoints.MapFallbackToPage("/_Host");
+    });
 
     app.Run();
 }
