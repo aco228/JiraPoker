@@ -23,7 +23,7 @@ public class JiraController : Controller
         try
         {
             var state = Request.Query["state"];
-            if (_jiraLocalhostCallbackHandler.IsDebug &&
+            if (!_jiraLocalhostCallbackHandler.IsDebug &&
                 _jiraLocalhostCallbackHandler.ShouldRedirectToLocalhost(state))
                 return Redirect(_jiraLocalhostCallbackHandler.GetRedirectLocalhostUrl(state, Request.QueryString.Value));
             
