@@ -1,36 +1,42 @@
 @page "/"
-@using JiraPoker.Core.Domain.Authentification
-@using JiraPoker.Core.Domain.Authentification.Models
+@using JiraPoker.Core.Presentation.HomeView
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<section>
+    <button @onclick="OnCreateNewSession">Create new session</button>   
+</section>
 
-Welcome to your new app.
-
-@if (Login != null)
+@if (Presentation.DisplayCreateNewSessionModal)
 {
-    <strong>Welcome @Login.Name</strong>
-    <br/>
-    <img src="@Login.PictureUrl"/>
+    <NewSessionModal
+        OnClose="OnModalClose"
+        OnSave="OnModalSave"/>
 }
 
-<SurveyPrompt Title="How is Blazor working for you?"/>
+@if (Presentation.CurrentUser != null)
+{
+    <div>
+        You are currently logged in as @Presentation.CurrentUser.Name
+    </div>   
+    <div>
+        Organization @Presentation.CurrentUser.Organization
+    </div>   
+}
 
+<section>
+    
+</section>
+
+
+@inherits PresentationPageBase<IHomeViewPresentationLayer>
 @code
 {
-    [Inject] public IAuthStateProvider AuthStateProvider { get; set; }
-
-    private ApplicationUserLoginModel Login = null;
-
-    protected override void OnAfterRender(bool firstRender)
+    public override void OnReady()
     {
-        if (firstRender)
-        {
-            Login = AuthStateProvider.GetUser();
-            StateHasChanged();
-        }
-        base.OnAfterRender(firstRender);
+        
     }
 
+    void OnCreateNewSession() => Presentation.OnCreateNewSession();
+    void OnModalClose() => Presentation.OnCreateNewSessionModalClose();
+    void OnModalSave() => Presentation.OnCreateNewSessionModalSave();
 }

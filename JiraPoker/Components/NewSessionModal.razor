@@ -1,0 +1,45 @@
+@using JiraPoker.Core.Presentation.HomeView
+<div>
+    <div>Create new session</div>
+    <div>Enter jira issue for session:</div>
+    <div>
+        <input type="text" @bind="_jiraIssueInput"/>
+    </div>
+    @if (!string.IsNullOrEmpty(_problemText))
+    {
+        <div>
+            @_problemText
+        </div>
+    }
+    <div>
+        <button @onclick="OnSaveImplementation">Create</button>
+        <button @onclick="OnClose">Close</button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback OnSave { get; set; }
+
+    string _jiraIssueInput;
+    string _problemText = string.Empty;
+
+    void OnSaveImplementation()
+    {
+        _problemText = string.Empty;
+        if (string.IsNullOrEmpty(_jiraIssueInput))
+        {
+            SetProblemText("You must enter Jira issue text");
+            return;
+        }
+
+        OnSave.InvokeAsync();
+    }
+
+    void SetProblemText(string text)
+    {
+        _problemText = text;
+        StateHasChanged();;
+    }
+    
+}

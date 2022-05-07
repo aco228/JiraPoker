@@ -17,4 +17,8 @@
       <ProjectReference Include="..\JiraPoker.Core\JiraPoker.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Components\Index" />
+    </ItemGroup>
+
 </Project>

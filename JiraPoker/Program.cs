@@ -2,15 +2,12 @@ using JiraPoker.Core.Application;
 using JiraPoker.Core.Infrastructure.Authentification;
 using JiraPoker.Core.Infrastructure.Configurations;
 using JiraPoker.Core.Infrastructure.Jira;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using JiraPoker.Core.Infrastructure.SessionManager;
+using JiraPoker.Core.Presentation;
 
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-
-    // Add services to the container.
-    
-    
     
     builder.Services.AddHttpContextAccessor();
     builder.Services.AddRazorPages();
@@ -19,6 +16,8 @@ try
     builder.Services.AddAuthenticationServices();
     builder.Services.AddJiraServices();
     builder.Services.RegisterApplicationServices();
+    builder.Services.RegisterPresentationLayers();
+    builder.Services.RegisterPokerSessionServices();
 
     var app = builder.Build();
 
