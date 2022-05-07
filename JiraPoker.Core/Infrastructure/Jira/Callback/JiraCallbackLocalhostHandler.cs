@@ -61,6 +61,6 @@ public class JiraCallbackLocalhostHandler : IJIraCallbackLocalhostHandler
         var split = state.Split('_');
         if (split.Length != 2)
             throw new ArgumentException("Split is not in correct format");
-        return $"https://localhost:{split[1]}{query}";
+        return $"https://localhost:{split[1]}/jira/callback{query}";
     }
 }

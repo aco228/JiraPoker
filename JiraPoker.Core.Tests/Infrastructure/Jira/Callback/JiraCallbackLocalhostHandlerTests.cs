@@ -36,7 +36,7 @@ public class JiraCallbackLocalhostHandlerTests
     {
         var service = GetService();
         var redirectUrl = service.GetRedirectLocalhostUrl("localhost_124", "?aco=123&bla=1");
-        Assert.Equal("https://localhost:124?aco=123&bla=1", redirectUrl);
+        Assert.Equal("https://localhost:124/jira/callback?aco=123&bla=1", redirectUrl);
     }
 
     [Fact]
