@@ -7,8 +7,13 @@ public interface IJIraCallbackLocalhostHandler
     /// <summary>
     /// Used for tests, avoid using it
     /// </summary>
-    /// <param name="value"></param>
     void SetLocalTestDebug(bool value);
+
+    /// <summary>
+    /// Get redirect url for Jira auth
+    /// </summary>
+    string GetRedirectUrl(string port);
+    
     bool ShouldRedirectToLocalhost(string state);
     string GetRedirectLocalhostUrl(string state);
 

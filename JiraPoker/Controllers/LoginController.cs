@@ -1,26 +1,22 @@
-﻿using JiraPoker.Core.Domain;
+﻿using JiraPoker.Core.Infrastructure.Jira.Callback;
 using Microsoft.AspNetCore.Mvc;
-using IConfigurationProvider = JiraPoker.Core.Domain.Configurations.IConfigurationProvider;
 
 namespace JiraPoker.Controllers;
 
 public class LoginController : Controller
 {
-    private readonly IConfigurationProvider _configuration;
+    private readonly IJIraCallbackLocalhostHandler _jIraCallbackLocalhost;
     
-    public LoginController(IConfigurationProvider configurationProvider)
+    public LoginController(
+        IJIraCallbackLocalhostHandler jIraCallbackLocalhostHandler)
     {
-        _configuration = configurationProvider;
+        _jIraCallbackLocalhost = jIraCallbackLocalhostHandler;
     }
     
     public IActionResult Index()
     {
-        var scopes = _configuration.GetSectionValue<string[]>("JiraScopes");
-        var scopesString = scopes.Length == 1 
-            ? scopes[0].Replace(":", "%3A") 
-            : string.Join("%20", scopes).Replace(":", "%3A"); // TODO: Refactor
-        
-        ViewBag.Url = _configuration.GetValue<string>(Constants.Configuration.JiraAuthenticationUrl).Replace("[SCOPES]", scopesString);
+        var port = Request.HttpContext.Connection.LocalPort;
+        ViewBag.Url = _jIraCallbackLocalhost.GetRedirectUrl(port.ToString());
         return View("~/Views/Login.cshtml");
     }
 }
