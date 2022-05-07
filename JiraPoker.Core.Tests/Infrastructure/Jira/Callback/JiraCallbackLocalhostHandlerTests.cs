@@ -35,15 +35,15 @@ public class JiraCallbackLocalhostHandlerTests
     public void Should_Return_Correct_RedirectUrl_For_Localhost()
     {
         var service = GetService();
-        var redirectUrl = service.GetRedirectLocalhostUrl("localhost_124");
-        Assert.Equal("https://localhost:124", redirectUrl);
+        var redirectUrl = service.GetRedirectLocalhostUrl("localhost_124", "?aco=123&bla=1");
+        Assert.Equal("https://localhost:124?aco=123&bla=1", redirectUrl);
     }
 
     [Fact]
     public void Should_Thow_Exception_When_State_Is_In_Wrong_Format()
     {
         var service = GetService();
-        Assert.Throws<ArgumentException>(() => { service.GetRedirectLocalhostUrl("localhost%20"); });
+        Assert.Throws<ArgumentException>(() => { service.GetRedirectLocalhostUrl("localhost%20", ""); });
     }
 
     [Fact]

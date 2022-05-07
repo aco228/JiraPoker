@@ -53,7 +53,7 @@ public class JiraCallbackLocalhostHandler : IJIraCallbackLocalhostHandler
         return !IsDebug && state.Contains("localhost"); // we will use state localhost with port for debug purposes;
     }
 
-    public string GetRedirectLocalhostUrl(string state)
+    public string GetRedirectLocalhostUrl(string state, string query)
     {
         if (string.IsNullOrEmpty(state))
             throw new ArgumentException("State is null or empty");
@@ -61,6 +61,6 @@ public class JiraCallbackLocalhostHandler : IJIraCallbackLocalhostHandler
         var split = state.Split('_');
         if (split.Length != 2)
             throw new ArgumentException("Split is not in correct format");
-        return $"https://localhost:{split[1]}";
+        return $"https://localhost:{split[1]}{query}";
     }
 }

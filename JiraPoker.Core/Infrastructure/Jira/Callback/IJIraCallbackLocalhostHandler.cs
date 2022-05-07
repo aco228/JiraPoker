@@ -15,6 +15,6 @@ public interface IJIraCallbackLocalhostHandler
     string GetRedirectUrl(string port);
     
     bool ShouldRedirectToLocalhost(string state);
-    string GetRedirectLocalhostUrl(string state);
+    public string GetRedirectLocalhostUrl(string state, string query);
 
 }
